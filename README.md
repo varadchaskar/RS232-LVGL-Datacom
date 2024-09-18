@@ -1,203 +1,128 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RS232 and LVGL Display Interface - Documentation</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-            line-height: 1.6;
-        }
-
-        h1, h2, h3 {
-            color: #333;
-        }
-
-        code {
-            background-color: #f4f4f4;
-            padding: 2px 5px;
-            border-radius: 4px;
-        }
-
-        pre {
-            background-color: #f4f4f4;
-            padding: 10px;
-            border-left: 4px solid #ccc;
-            overflow-x: auto;
-        }
-
-        .code-section {
-            background-color: #f9f9f9;
-            padding: 15px;
-            border: 1px solid #ddd;
-            margin-top: 10px;
-        }
-
-        .important {
-            color: #d9534f;
-            font-weight: bold;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="README file for RS232 and LVGL Display Interface Code">
+  <title>RS232 and LVGL Display Interface - README</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      line-height: 1.6;
+      margin: 20px;
+      color: #333;
+    }
+    h1 {
+      color: #2c3e50;
+    }
+    h2 {
+      color: #2980b9;
+    }
+    p {
+      margin-bottom: 15px;
+    }
+    ul {
+      margin-bottom: 15px;
+    }
+    code {
+      background-color: #f4f4f4;
+      padding: 5px;
+      font-family: Consolas, monospace;
+    }
+    pre {
+      background-color: #f4f4f4;
+      padding: 15px;
+      overflow-x: auto;
+    }
+    a {
+      color: #3498db;
+      text-decoration: none;
+    }
+    .code-section {
+      background-color: #f9f9f9;
+      padding: 15px;
+      border: 1px solid #ddd;
+      margin-top: 10px;
+    }
+  </style>
 </head>
-
 <body>
 
-    <h1>RS232 and LVGL Display Interface with PlatformIO</h1>
+  <h1>RS232 and LVGL Display Interface - README</h1>
 
-    <p>
-        This project demonstrates how to interface an RS232 serial communication with an LVGL-based GUI using an ESP32. The system allows for sending data through an on-screen keyboard and displaying the received data via RS232 on the screen. This project is set up using <strong>PlatformIO</strong> in the VSCode IDE.
-    </p>
+  <h2>1. Overview</h2>
+  <p>
+    This project demonstrates interfacing an RS232 serial communication with a TFT display using the <a href="https://lvgl.io/">LittlevGL (lvgl)</a> graphics library. The system enables sending and receiving data through RS232 and displays it on the TFT screen. It also features an interactive user interface built with LVGL.
+  </p>
 
-    <h2>Project Overview</h2>
-    <p>
-        The ESP32 communicates with an RS232 interface to send and receive data. It also uses the LVGL (Lightweight Graphics Library) for the GUI, where users can input text using an on-screen keyboard and see the received data displayed on the screen. A TFT display is used as the output device.
-    </p>
+  <h2>2. Purpose</h2>
+  <p>
+    The goal of this code is to create a simple GUI (Graphical User Interface) on a TFT display, allowing data to be sent via RS232 and displayed on-screen. It is designed for embedded systems requiring both data display and user interaction through an intuitive graphical interface.
+  </p>
 
-    <h2>Key Features</h2>
-    <ul>
-        <li>RS232 data transmission and reception using UART1 on ESP32.</li>
-        <li>Graphical interface built using the LVGL library.</li>
-        <li>On-screen keyboard for text input.</li>
-        <li>Display of RS232 received data on a TFT screen.</li>
-        <li>Touchscreen calibration using SPIFFS to store calibration data.</li>
-    </ul>
+  <h2>3. How It Works</h2>
+  <p>
+    The main functionalities of this project include:
+  </p>
+  <ul>
+    <li><b>RS232 Communication:</b> The ESP32 uses UART1 for sending and receiving data through RS232. Data received from RS232 is displayed on the TFT screen.</li>
+    <li><b>LVGL GUI:</b> LittlevGL manages the graphical elements on the TFT screen, including displaying text and handling user interactions.</li>
+    <li><b>Touchscreen Calibration:</b> The project includes a function to calibrate the touchscreen and store calibration data in SPIFFS.</li>
+  </ul>
 
-    <h2>Required Libraries</h2>
-    <p>Ensure the following libraries are included in your <code>platformio.ini</code>:</p>
-    <pre>
-[env:esp32]
-platform = espressif32
-board = esp32dev
-framework = arduino
-lib_deps = 
-    lvgl/lvgl@^8.3.0
-    Bodmer/TFT_eSPI@^2.5.0
-    esp32/FS@^1.0.0
-    SPI
-    ArduinoJSON
-    </pre>
+  <h2>4. Applications</h2>
+  <p>
+    This code is suitable for various applications, including:
+  </p>
+  <ul>
+    <li><b>Embedded System Interfaces:</b> Ideal for systems requiring a GUI to display and manage data, such as industrial control panels or monitoring systems.</li>
+    <li><b>Data Display:</b> Useful for displaying real-time data received from serial interfaces on a graphical screen.</li>
+    <li><b>Interactive Projects:</b> Can be used in projects where user input and data visualization are crucial, such as IoT devices or custom control interfaces.</li>
+  </ul>
 
-    <h2>Explanation of the Code</h2>
+  <h2>5. Key Features</h2>
+  <ul>
+    <li><b>Real-time Data Display:</b> Shows data received from RS232 on the TFT display in real-time.</li>
+    <li><b>Graphical User Interface:</b> Built using LVGL, allowing for a rich and interactive display experience.</li>
+    <li><b>Touchscreen Calibration:</b> Ensures accurate touch input by calibrating the touchscreen and saving the calibration data.</li>
+    <li><b>Customizable GUI:</b> LVGL provides options to customize the appearance and behavior of the GUI elements.</li>
+  </ul>
 
-    <div class="code-section">
-        <h3>1. Include Necessary Libraries</h3>
-        <pre>
-#include &lt;Arduino.h&gt;
-#include &lt;FS.h&gt;
-#include &lt;SPI.h&gt;
-#include &lt;lvgl.h&gt;
-#include &lt;TFT_eSPI.h&gt;
-        </pre>
-        <p>
-            These libraries are crucial for handling file system operations, SPI communication, the LVGL graphics library, and interfacing with the TFT display.
-        </p>
-    </div>
+  <h2>6. Libraries Used</h2>
+  <ul>
+    <li><b>LittlevGL (lvgl):</b> A comprehensive graphics library for embedded devices that manages GUI elements and interactions.</li>
+    <li><b>TFT_eSPI:</b> Library for interfacing with the TFT display, handling drawing and touch inputs.</li>
+    <li><b>FS (File System):</b> Used for storing calibration data and handling file operations.</li>
+    <li><b>Arduino Core:</b> The code is written using the Arduino framework, making it accessible for a wide range of developers.</li>
+  </ul>
 
-    <div class="code-section">
-        <h3>2. Pin Configuration</h3>
-        <pre>
-#define TOUCH_CS 21
-#define BUTTON_PIN_1 25
-#define BUZZER_PIN 13
-#define RS232_RXD 26
-#define RS232_TXD 12
-        </pre>
-        <p>
-            These are the pin configurations for the touch controller, buttons, buzzer, and RS232 communication. Modify these values if you’re using different GPIOs.
-        </p>
-    </div>
+  <h2>7. Code Breakdown</h2>
+  <p>
+    The code includes the following key sections:
+  </p>
+  <ul>
+    <li><b>Include Libraries:</b> Necessary libraries are included for handling TFT display, LVGL, and RS232 communication.</li>
+    <li><b>Pin Configuration:</b> Defines the GPIO pins used for various functions such as RS232 communication and touchscreen control.</li>
+    <li><b>Initialization:</b> Initializes the TFT display, RS232 interface, and LVGL environment.</li>
+    <li><b>Touch Calibration:</b> Function to calibrate the touchscreen and store calibration data.</li>
+    <li><b>Data Handling:</b> Functions to receive data from RS232 and display it on the TFT screen, as well as manage GUI elements.</li>
+  </ul>
 
-    <div class="code-section">
-        <h3>3. TFT and RS232 Initialization</h3>
-        <pre>
-TFT_eSPI tft = TFT_eSPI();  // TFT instance
-HardwareSerial rs232(1);    // RS232 communication on UART1
-        </pre>
-        <p>
-            This initializes the TFT display object using the <code>TFT_eSPI</code> library and the RS232 communication on UART1 of the ESP32.
-        </p>
-    </div>
+  <h2>8. Potential Future Work</h2>
+  <p>
+    Future improvements and additional features could include:
+  </p>
+  <ul>
+    <li><b>Dynamic Data Handling:</b> Enhance the system to handle dynamic data or support multiple RS232 devices.</li>
+    <li><b>Enhanced GUI Features:</b> Add animations or advanced GUI components to improve user interaction.</li>
+    <li><b>Additional Input Methods:</b> Integrate other input methods such as buttons or rotary encoders for more versatile control.</li>
+    <li><b>Network Integration:</b> Add functionality to send or receive data over network interfaces like Wi-Fi or Bluetooth.</li>
+  </ul>
 
-    <div class="code-section">
-        <h3>4. Touch Calibration</h3>
-        <pre>
-void touch_calibrate() {
-    uint16_t calData[5];
-    ...
-    tft.calibrateTouch(calData, TFT_MAGENTA, TFT_BLACK, 15);
-    File f = SPIFFS.open(CALIBRATION_FILE, "w");
-    if (f) {
-        f.write((const unsigned char*)calData, 14);
-        f.close();
-    }
-}
-        </pre>
-        <p>
-            The <code>touch_calibrate()</code> function is responsible for calibrating the touchscreen. It stores the calibration data in SPIFFS for reuse.
-        </p>
-    </div>
-
-    <div class="code-section">
-        <h3>5. RS232 Data Reception and Display</h3>
-        <pre>
-if (rs232.available()) {
-    receivedData = "";
-    while (rs232.available()) {
-        receivedData += (char)rs232.read();  // Read RS232 data
-    }
-    lv_label_set_text(label, receivedData.c_str());
-    Serial.println("Received from RS-232: " + receivedData);
-}
-        </pre>
-        <p>
-            This section checks if data is available from the RS232 interface and reads it. The received data is displayed on the TFT screen and also printed to the serial monitor.
-        </p>
-    </div>
-
-    <div class="code-section">
-        <h3>6. Keyboard Input and Sending Data via RS232</h3>
-        <pre>
-void kb_event_handler(lv_event_t *e) {
-    if (code == LV_EVENT_READY || code == LV_EVENT_CANCEL) {
-        const char *text = lv_textarea_get_text(textarea);  // Get text from textarea
-        rs232.println(text);  // Send data via RS232
-        Serial.println("Sent to RS-232: " + String(text));
-    }
-}
-        </pre>
-        <p>
-            This function handles events triggered by the on-screen keyboard. When the user inputs text, the text is sent via RS232 and displayed on the screen.
-        </p>
-    </div>
-
-    <h2>PlatformIO Setup</h2>
-    <p>
-        Make sure to have the correct setup in your <code>platformio.ini</code> file. This ensures that all dependencies and configurations are correctly set up.
-    </p>
-    <pre>
-[env:esp32]
-platform = espressif32
-board = esp32dev
-framework = arduino
-lib_deps = 
-    lvgl/lvgl@^8.3.0
-    Bodmer/TFT_eSPI@^2.5.0
-    esp32/FS@^1.0.0
-    SPI
-    ArduinoJSON
-    </pre>
-
-    <h2>Running the Code</h2>
-    <p>
-        1. Open VSCode and ensure PlatformIO is installed.<br>
-        2. Create a new project and replace the code with the provided source code.<br>
-        3. Adjust the pins and configuration if necessary.<br>
-        4. Upload the code to your ESP32 and open the serial monitor to observe RS232 communication.
-    </p>
+  <h2>9. Conclusion</h2>
+  <p>
+    This project provides a robust framework for interfacing RS232 communication with a TFT display using LVGL. It is suitable for embedded systems requiring both data visualization and interactive graphical interfaces and can be extended with additional features and improvements for more complex applications.
+  </p>
 
 </body>
-
 </html>
