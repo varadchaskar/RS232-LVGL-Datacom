@@ -3,6 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ESP32 RS-232 Communication with LVGL Interface (PlatformIO)</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            line-height: 1.6;
+        }
+        h1, h2, h3 {
+            color: #2c3e50;
+        }
+        code {
+            background-color: #f4f4f4;
+            padding: 5px;
+            border-radius: 5px;
+        }
+        pre {
+            background-color: #f4f4f4;
+            padding: 10px;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+        ul {
+            margin-top: 10px;
+        }
+        .note {
+            background-color: #e8f4e8;
+            padding: 10px;
+            border-left: 5px solid #2ecc71;
+            margin-bottom: 20px;
+        }
+    </style>
 </head>
 <body>
 
