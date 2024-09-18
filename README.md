@@ -4,51 +4,11 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="README file for RS232 and LVGL Display Interface Code">
-  <title>RS232 and LVGL Display Interface - README</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      line-height: 1.6;
-      margin: 20px;
-      color: #333;
-    }
-    h1 {
-      color: #2c3e50;
-    }
-    h2 {
-      color: #2980b9;
-    }
-    p {
-      margin-bottom: 15px;
-    }
-    ul {
-      margin-bottom: 15px;
-    }
-    code {
-      background-color: #f4f4f4;
-      padding: 5px;
-      font-family: Consolas, monospace;
-    }
-    pre {
-      background-color: #f4f4f4;
-      padding: 15px;
-      overflow-x: auto;
-    }
-    a {
-      color: #3498db;
-      text-decoration: none;
-    }
-    .code-section {
-      background-color: #f9f9f9;
-      padding: 15px;
-      border: 1px solid #ddd;
-      margin-top: 10px;
-    }
-  </style>
+  
 </head>
 <body>
 
-  <h1>RS232 and LVGL Display Interface - README</h1>
+  <h1>RS232 and LVGL Display Interface</h1>
 
   <h2>1. Overview</h2>
   <p>
@@ -118,11 +78,6 @@
     <li><b>Additional Input Methods:</b> Integrate other input methods such as buttons or rotary encoders for more versatile control.</li>
     <li><b>Network Integration:</b> Add functionality to send or receive data over network interfaces like Wi-Fi or Bluetooth.</li>
   </ul>
-
-  <h2>9. Conclusion</h2>
-  <p>
-    This project provides a robust framework for interfacing RS232 communication with a TFT display using LVGL. It is suitable for embedded systems requiring both data visualization and interactive graphical interfaces and can be extended with additional features and improvements for more complex applications.
-  </p>
 
 </body>
 </html>
