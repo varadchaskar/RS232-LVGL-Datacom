@@ -1,151 +1,203 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ESP32 RS-232 Communication with LVGL Interface (PlatformIO)</title>
+    <title>RS232 and LVGL Display Interface - Documentation</title>
     <style>
         body {
             font-family: Arial, sans-serif;
             margin: 20px;
             line-height: 1.6;
         }
+
         h1, h2, h3 {
-            color: #2c3e50;
+            color: #333;
         }
+
         code {
             background-color: #f4f4f4;
-            padding: 5px;
-            border-radius: 5px;
+            padding: 2px 5px;
+            border-radius: 4px;
         }
+
         pre {
             background-color: #f4f4f4;
             padding: 10px;
-            border-radius: 5px;
+            border-left: 4px solid #ccc;
             overflow-x: auto;
         }
-        ul {
+
+        .code-section {
+            background-color: #f9f9f9;
+            padding: 15px;
+            border: 1px solid #ddd;
             margin-top: 10px;
         }
-        .note {
-            background-color: #e8f4e8;
-            padding: 10px;
-            border-left: 5px solid #2ecc71;
-            margin-bottom: 20px;
+
+        .important {
+            color: #d9534f;
+            font-weight: bold;
         }
     </style>
 </head>
+
 <body>
 
-    <h1>ESP32 RS-232 Communication with LVGL Interface</h1>
-    <p>This project demonstrates how to use an ESP32 microcontroller to interface with an LVGL (Light and Versatile Graphics Library) display and communicate with an RS-232 serial device. The LVGL display includes an on-screen keyboard that allows the user to input text, which is then sent over RS-232. Any received RS-232 data is displayed on the screen.</p>
+    <h1>RS232 and LVGL Display Interface with PlatformIO</h1>
 
-    <h2>Features</h2>
+    <p>
+        This project demonstrates how to interface an RS232 serial communication with an LVGL-based GUI using an ESP32. The system allows for sending data through an on-screen keyboard and displaying the received data via RS232 on the screen. This project is set up using <strong>PlatformIO</strong> in the VSCode IDE.
+    </p>
+
+    <h2>Project Overview</h2>
+    <p>
+        The ESP32 communicates with an RS232 interface to send and receive data. It also uses the LVGL (Lightweight Graphics Library) for the GUI, where users can input text using an on-screen keyboard and see the received data displayed on the screen. A TFT display is used as the output device.
+    </p>
+
+    <h2>Key Features</h2>
     <ul>
-        <li>Graphical interface using the <strong>LVGL library</strong>.</li>
-        <li>RS-232 communication using the ESP32's UART (hardware serial).</li>
-        <li>An on-screen keyboard to enter text and send it via RS-232.</li>
-        <li>Received RS-232 data is displayed in real-time on the screen.</li>
-        <li>Touchscreen calibration to ensure accurate touch input.</li>
+        <li>RS232 data transmission and reception using UART1 on ESP32.</li>
+        <li>Graphical interface built using the LVGL library.</li>
+        <li>On-screen keyboard for text input.</li>
+        <li>Display of RS232 received data on a TFT screen.</li>
+        <li>Touchscreen calibration using SPIFFS to store calibration data.</li>
     </ul>
 
-    <h2>Hardware Requirements</h2>
-    <ul>
-        <li>ESP32 microcontroller</li>
-        <li>TFT display with a touchscreen (320x240 resolution)</li>
-        <li>RS-232 serial communication interface</li>
-        <li>Buzzer and buttons for user interaction (optional)</li>
-    </ul>
-
-    <h2>Development Environment</h2>
-    <ul>
-        <li><strong>Platform:</strong> PlatformIO</li>
-        <li><strong>Framework:</strong> Arduino (within PlatformIO)</li>
-        <li><strong>Board:</strong> ESP32</li>
-        <li><strong>Upload Protocol:</strong> Serial</li>
-    </ul>
-
-    <h2>Libraries Used</h2>
-    <ul>
-        <li><code>lvgl.h</code> - Light and Versatile Graphics Library for creating the GUI</li>
-        <li><code>TFT_eSPI.h</code> - Library to control the TFT display</li>
-        <li><code>SPI.h</code> - For SPI communication</li>
-        <li><code>FS.h</code> - For managing the file system on ESP32 (used for storing calibration data)</li>
-    </ul>
-
-    <h2>Pin Definitions</h2>
+    <h2>Required Libraries</h2>
+    <p>Ensure the following libraries are included in your <code>platformio.ini</code>:</p>
     <pre>
-#define TOUCH_CS 21          // Touch chip select pin
-#define BUTTON_PIN_1 25      // GPIO pin for button 1
-#define BUZZER_PIN 13        // GPIO pin for buzzer
-#define RS232_RXD 26         // RS-232 receive pin
-#define RS232_TXD 12         // RS-232 transmit pin
-    </pre>
-    <p>The RS-232 communication uses the ESP32's hardware serial (UART1) with RX on pin 26 and TX on pin 12. The TFT display and the touchscreen use SPI communication.</p>
-
-    <h2>Key Components of the Code</h2>
-    <h3>1. <code>touch_calibrate()</code></h3>
-    <p>This function handles the touchscreen calibration. It checks if calibration data exists in the SPIFFS file system and uses it if available. If not, the user is prompted to manually calibrate the touchscreen by touching the corners of the display. The calibration data is then stored in the SPIFFS for future use.</p>
-
-    <h3>2. <code>lvgl_port_tp_read()</code></h3>
-    <p>This function reads the touchscreen input and feeds it into the LVGL library. It converts touch coordinates to the LVGL format and updates the input device state.</p>
-
-    <h3>3. <code>my_disp_flush()</code></h3>
-    <p>This function is responsible for drawing the LVGL interface on the TFT display. It flushes the graphical data from the buffer to the screen.</p>
-
-    <h3>4. RS-232 Communication</h3>
-    <p>The ESP32's UART1 is used to send and receive data over RS-232. The received data is stored in a string and displayed on the screen via LVGL. When the user enters text using the on-screen keyboard, it is sent via RS-232:</p>
-    <pre>
-const char *text = lv_textarea_get_text(textarea); // Get text from textarea
-rs232.println(text);  // Send text via RS-232
+[env:esp32]
+platform = espressif32
+board = esp32dev
+framework = arduino
+lib_deps = 
+    lvgl/lvgl@^8.3.0
+    Bodmer/TFT_eSPI@^2.5.0
+    esp32/FS@^1.0.0
+    SPI
+    ArduinoJSON
     </pre>
 
-    <h3>5. On-Screen Keyboard</h3>
-    <p>When the user presses Button 2, an on-screen keyboard appears, allowing them to enter text. Once the text is entered, it is sent via RS-232, and the keyboard is removed from the display. The keyboard is created using the following code:</p>
-    <pre>
-textarea = lv_textarea_create(lv_scr_act());
-keyboard = lv_keyboard_create(lv_scr_act());
-lv_keyboard_set_textarea(keyboard, textarea);
-    </pre>
+    <h2>Explanation of the Code</h2>
 
-    <h2>Display Calibration</h2>
-    <p>The calibration process is crucial for ensuring that touch input is accurate. The calibration data is stored in the SPIFFS file system, and this is the process that checks if calibration is needed:</p>
-    <pre>
-if (SPIFFS.exists(CALIBRATION_FILE)) {
-    // Use existing calibration data
-    tft.setTouch(calData);
-} else {
-    // Perform manual calibration
+    <div class="code-section">
+        <h3>1. Include Necessary Libraries</h3>
+        <pre>
+#include &lt;Arduino.h&gt;
+#include &lt;FS.h&gt;
+#include &lt;SPI.h&gt;
+#include &lt;lvgl.h&gt;
+#include &lt;TFT_eSPI.h&gt;
+        </pre>
+        <p>
+            These libraries are crucial for handling file system operations, SPI communication, the LVGL graphics library, and interfacing with the TFT display.
+        </p>
+    </div>
+
+    <div class="code-section">
+        <h3>2. Pin Configuration</h3>
+        <pre>
+#define TOUCH_CS 21
+#define BUTTON_PIN_1 25
+#define BUZZER_PIN 13
+#define RS232_RXD 26
+#define RS232_TXD 12
+        </pre>
+        <p>
+            These are the pin configurations for the touch controller, buttons, buzzer, and RS232 communication. Modify these values if you’re using different GPIOs.
+        </p>
+    </div>
+
+    <div class="code-section">
+        <h3>3. TFT and RS232 Initialization</h3>
+        <pre>
+TFT_eSPI tft = TFT_eSPI();  // TFT instance
+HardwareSerial rs232(1);    // RS232 communication on UART1
+        </pre>
+        <p>
+            This initializes the TFT display object using the <code>TFT_eSPI</code> library and the RS232 communication on UART1 of the ESP32.
+        </p>
+    </div>
+
+    <div class="code-section">
+        <h3>4. Touch Calibration</h3>
+        <pre>
+void touch_calibrate() {
+    uint16_t calData[5];
+    ...
     tft.calibrateTouch(calData, TFT_MAGENTA, TFT_BLACK, 15);
     File f = SPIFFS.open(CALIBRATION_FILE, "w");
-    f.write((const unsigned char *)calData, 14);
+    if (f) {
+        f.write((const unsigned char*)calData, 14);
+        f.close();
+    }
 }
+        </pre>
+        <p>
+            The <code>touch_calibrate()</code> function is responsible for calibrating the touchscreen. It stores the calibration data in SPIFFS for reuse.
+        </p>
+    </div>
+
+    <div class="code-section">
+        <h3>5. RS232 Data Reception and Display</h3>
+        <pre>
+if (rs232.available()) {
+    receivedData = "";
+    while (rs232.available()) {
+        receivedData += (char)rs232.read();  // Read RS232 data
+    }
+    lv_label_set_text(label, receivedData.c_str());
+    Serial.println("Received from RS-232: " + receivedData);
+}
+        </pre>
+        <p>
+            This section checks if data is available from the RS232 interface and reads it. The received data is displayed on the TFT screen and also printed to the serial monitor.
+        </p>
+    </div>
+
+    <div class="code-section">
+        <h3>6. Keyboard Input and Sending Data via RS232</h3>
+        <pre>
+void kb_event_handler(lv_event_t *e) {
+    if (code == LV_EVENT_READY || code == LV_EVENT_CANCEL) {
+        const char *text = lv_textarea_get_text(textarea);  // Get text from textarea
+        rs232.println(text);  // Send data via RS232
+        Serial.println("Sent to RS-232: " + String(text));
+    }
+}
+        </pre>
+        <p>
+            This function handles events triggered by the on-screen keyboard. When the user inputs text, the text is sent via RS232 and displayed on the screen.
+        </p>
+    </div>
+
+    <h2>PlatformIO Setup</h2>
+    <p>
+        Make sure to have the correct setup in your <code>platformio.ini</code> file. This ensures that all dependencies and configurations are correctly set up.
+    </p>
+    <pre>
+[env:esp32]
+platform = espressif32
+board = esp32dev
+framework = arduino
+lib_deps = 
+    lvgl/lvgl@^8.3.0
+    Bodmer/TFT_eSPI@^2.5.0
+    esp32/FS@^1.0.0
+    SPI
+    ArduinoJSON
     </pre>
 
-    <h2>How It Works</h2>
-    <p>When the ESP32 starts, it initializes the display, touchscreen, and RS-232 communication. The LVGL library manages the graphical interface, including buttons and an on-screen keyboard. The user can click a button to bring up the keyboard, enter text, and send it via RS-232. Any data received via RS-232 is displayed on the screen in real time.</p>
-
-    <h3>Setup</h3>
-    <p>In the <code>setup()</code> function, we initialize the following:</p>
-    <ul>
-        <li>Serial communication for debugging</li>
-        <li>RS-232 communication on UART1</li>
-        <li>TFT display and touch input</li>
-        <li>LVGL for the graphical user interface</li>
-    </ul>
-
-    <h3>Loop</h3>
-    <p>The main <code>loop()</code> function handles the LVGL tasks and continuously checks for incoming RS-232 data. If data is received, it is appended to a string and displayed on the screen.</p>
-
-    <h2>Conclusion</h2>
-    <p>This project provides a basic framework for interfacing an ESP32 with a touchscreen TFT display using the LVGL library and communicating with an RS-232 device. The on-screen keyboard allows for user input, and the received data is displayed in real-time.</p>
-
-    <h3>Potential Enhancements</h3>
-    <ul>
-        <li>Add more sophisticated RS-232 message handling, such as parsing specific commands.</li>
-        <li>Improve the user interface with more buttons and controls using LVGL.</li>
-        <li>Implement error handling for RS-232 communication.</li>
-    </ul>
+    <h2>Running the Code</h2>
+    <p>
+        1. Open VSCode and ensure PlatformIO is installed.<br>
+        2. Create a new project and replace the code with the provided source code.<br>
+        3. Adjust the pins and configuration if necessary.<br>
+        4. Upload the code to your ESP32 and open the serial monitor to observe RS232 communication.
+    </p>
 
 </body>
+
 </html>
